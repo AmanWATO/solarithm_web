@@ -54,14 +54,27 @@ const config = {
           DEFAULT: "oklch(var(--card))",
           foreground: "oklch(var(--card-foreground))",
         },
-        // Solarithm custom colors (left as HEX unless you want to convert these too)
-        "solar-gold": "oklch(var(--solar-gold))",
-        "midnight-blue": "oklch(var(--midnight-blue))",
-        "cloud-gray": "oklch(var(--cloud-gray))",
-        "jet-black": "oklch(var(--jet-black))",
-        "sky-white": "oklch(var(--sky-white))",
-        "ember-orange": "oklch(var(--ember-orange))",
-        "dawn-teal": "oklch(var(--dawn-teal))",
+        // Modern Solarithm color palette
+        "electric-blue": "#0066FF",
+        "electric-blue-light": "#3385FF",
+        "electric-blue-dark": "#0052CC",
+        "neon-green": "#00FF88",
+        "neon-green-light": "#33FFAA",
+        "neon-green-dark": "#00CC6A",
+        "cyber-purple": "#8B5CF6",
+        "cyber-purple-light": "#A78BFA",
+        "cyber-purple-dark": "#7C3AED",
+        "solar-orange": "#FF6B35",
+        "solar-orange-light": "#FF8A5B",
+        "solar-orange-dark": "#E55A2B",
+        "deep-space": "#0A0A0F",
+        "space-gray": "#1A1A2E",
+        "cosmic-gray": "#2D2D44",
+        "stellar-white": "#F8FAFC",
+        "nebula-gray": "#64748B",
+        "quantum-gold": "#FFD700",
+        "quantum-gold-light": "#FFED4A",
+        "quantum-gold-dark": "#F59E0B",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -77,10 +90,55 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
+        "glow": {
+          "0%, 100%": { boxShadow: "0 0 20px rgba(0, 102, 255, 0.3)" },
+          "50%": { boxShadow: "0 0 40px rgba(0, 102, 255, 0.6)" },
+        },
+        "pulse-glow": {
+          "0%, 100%": { 
+            boxShadow: "0 0 20px rgba(0, 255, 136, 0.4)",
+            transform: "scale(1)"
+          },
+          "50%": { 
+            boxShadow: "0 0 40px rgba(0, 255, 136, 0.8)",
+            transform: "scale(1.05)"
+          },
+        },
+        "shimmer": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+        "orbit": {
+          "0%": { transform: "rotate(0deg) translateX(100px) rotate(0deg)" },
+          "100%": { transform: "rotate(360deg) translateX(100px) rotate(-360deg)" },
+        },
+        "matrix": {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(100vh)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "float": "float 6s ease-in-out infinite",
+        "glow": "glow 2s ease-in-out infinite alternate",
+        "pulse-glow": "pulse-glow 3s ease-in-out infinite",
+        "shimmer": "shimmer 2s linear infinite",
+        "orbit": "orbit 20s linear infinite",
+        "matrix": "matrix 3s linear infinite",
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'cyber-grid': 'linear-gradient(rgba(0, 102, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 102, 255, 0.1) 1px, transparent 1px)',
+        'neural-network': 'radial-gradient(circle at 25% 25%, rgba(0, 255, 136, 0.2) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.2) 0%, transparent 50%)',
+      },
+      backgroundSize: {
+        'cyber-grid': '50px 50px',
       },
     },
   },

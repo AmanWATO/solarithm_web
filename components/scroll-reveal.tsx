@@ -12,23 +12,27 @@ interface ScrollRevealProps {
   distance?: number
   once?: boolean
   className?: string
+  scale?: boolean
+  rotate?: boolean
 }
 
 export default function ScrollReveal({
   children,
   width = "fit-content",
   delay = 0,
-  duration = 0.5,
+  duration = 0.6,
   direction = "up",
   distance = 50,
   once = true,
   className = "",
+  scale = false,
+  rotate = false,
 }: ScrollRevealProps) {
   const controls = useAnimation()
   const ref = useRef<HTMLDivElement>(null)
   const [isInView, setIsInView] = useState(false)
 
-  // Define variants based on direction
+  // Define variants based on direction and effects
   const getDirectionalVariants = () => {
     const variants: { hidden: Variant; visible: Variant } = {
       hidden: {
@@ -39,11 +43,12 @@ export default function ScrollReveal({
         transition: {
           duration,
           delay,
-          ease: "easeOut",
+          ease: [0.25, 0.46, 0.45, 0.94], // Custom easing for smooth animation
         },
       },
     }
 
+    // Add directional movement
     switch (direction) {
       case "up":
         variants.hidden.y = distance
@@ -64,6 +69,18 @@ export default function ScrollReveal({
       case "none":
       default:
         break
+    }
+
+    // Add scale effect
+    if (scale) {
+      variants.hidden.scale = 0.8
+      variants.visible.scale = 1
+    }
+
+    // Add rotation effect
+    if (rotate) {
+      variants.hidden.rotate = -10
+      variants.visible.rotate = 0
     }
 
     return variants
