@@ -7,15 +7,21 @@ import ModernSolarIcon from "@/components/modern-solar-icon"
 
 export default function ModernHeroSection() {
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-deep-space via-space-gray to-cosmic-gray px-4 py-24 text-center sm:px-6 lg:px-8">
+    <section 
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 py-24 text-center sm:px-6 lg:px-8"
+      style={{
+        background: "linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 50%, #2D2D44 100%)"
+      }}
+    >
       {/* Animated background elements */}
       <div className="absolute inset-0">
         {/* Floating particles */}
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-electric-blue rounded-full"
+            className="absolute w-2 h-2 rounded-full"
             style={{
+              backgroundColor: "#0066FF",
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
             }}
@@ -37,13 +43,14 @@ export default function ModernHeroSection() {
         {[...Array(3)].map((_, i) => (
           <motion.div
             key={`ring-${i}`}
-            className="absolute border border-electric-blue/20 rounded-full"
+            className="absolute border rounded-full"
             style={{
               width: `${300 + i * 200}px`,
               height: `${300 + i * 200}px`,
               left: "50%",
               top: "50%",
               transform: "translate(-50%, -50%)",
+              borderColor: "rgba(0, 102, 255, 0.2)"
             }}
             animate={{
               rotate: 360,
@@ -73,14 +80,22 @@ export default function ModernHeroSection() {
           transition={{ duration: 0.6 }}
           className="mb-8 inline-block"
         >
-          <div className="glass rounded-full px-6 py-2 border border-electric-blue/30">
+          <div 
+            className="rounded-full px-6 py-2 border"
+            style={{
+              backgroundColor: "rgba(248, 250, 252, 0.1)",
+              backdropFilter: "blur(10px)",
+              borderColor: "rgba(0, 102, 255, 0.3)"
+            }}
+          >
             <div className="flex items-center space-x-2">
-              <Sparkles className="h-4 w-4 text-neon-green" />
-              <span className="text-sm font-medium text-stellar-white">
+              <Sparkles className="h-4 w-4" style={{ color: "#00FF88" }} />
+              <span className="text-sm font-medium" style={{ color: "#F8FAFC" }}>
                 Launching November 2025
               </span>
               <motion.div
-                className="w-2 h-2 bg-neon-green rounded-full"
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: "#00FF88" }}
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [1, 0.5, 1],
@@ -102,20 +117,43 @@ export default function ModernHeroSection() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mb-6 text-4xl font-extrabold tracking-tight sm:text-5xl md:text-7xl"
         >
-          <span className="block bg-gradient-to-r from-electric-blue via-neon-green to-cyber-purple bg-clip-text text-transparent">
+          <span 
+            className="block"
+            style={{
+              background: "linear-gradient(to right, #0066FF, #00FF88, #8B5CF6)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text"
+            }}
+          >
             Solarithm
           </span>
           <motion.span 
-            className="block text-stellar-white mt-2"
+            className="block mt-2"
+            style={{ color: "#F8FAFC" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <span className="bg-gradient-to-r from-quantum-gold to-solar-orange bg-clip-text text-transparent">
+            <span 
+              style={{
+                background: "linear-gradient(to right, #FFD700, #FF6B35)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text"
+              }}
+            >
               Sunlight
             </span>{" "}
             Meets{" "}
-            <span className="bg-gradient-to-r from-cyber-purple to-electric-blue bg-clip-text text-transparent">
+            <span 
+              style={{
+                background: "linear-gradient(to right, #8B5CF6, #0066FF)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text"
+              }}
+            >
               Strategy
             </span>
           </motion.span>
@@ -126,7 +164,8 @@ export default function ModernHeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="mb-10 text-xl text-stellar-white/80 sm:text-2xl max-w-3xl mx-auto"
+          className="mb-10 text-xl sm:text-2xl max-w-3xl mx-auto"
+          style={{ color: "rgba(248, 250, 252, 0.8)" }}
         >
           The intelligent solar market platform designed for energy companies, startups, and analysts
         </motion.p>
@@ -145,12 +184,17 @@ export default function ModernHeroSection() {
           ].map((item, index) => (
             <motion.div
               key={index}
-              className="flex items-center space-x-2 glass rounded-full px-4 py-2 border border-electric-blue/20"
+              className="flex items-center space-x-2 rounded-full px-4 py-2 border"
+              style={{
+                backgroundColor: "rgba(248, 250, 252, 0.1)",
+                backdropFilter: "blur(10px)",
+                borderColor: "rgba(0, 102, 255, 0.2)"
+              }}
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              <item.icon className="h-4 w-4 text-neon-green" size={16} />
-              <span className="text-stellar-white/80">{item.text}</span>
+              <item.icon className="h-4 w-4" style={{ color: "#00FF88" }} size={16} />
+              <span style={{ color: "rgba(248, 250, 252, 0.8)" }}>{item.text}</span>
             </motion.div>
           ))}
         </motion.div>
@@ -164,7 +208,12 @@ export default function ModernHeroSection() {
         >
           <Link
             href="#early-access"
-            className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-electric-blue to-neon-green px-8 py-4 text-lg font-medium text-deep-space transition-all duration-300 hover:shadow-lg hover:shadow-electric-blue/25"
+            className="group relative inline-flex items-center justify-center overflow-hidden rounded-full px-8 py-4 text-lg font-medium transition-all duration-300 hover:shadow-lg"
+            style={{
+              background: "linear-gradient(to right, #0066FF, #00FF88)",
+              color: "#0A0A0F",
+              boxShadow: "0 4px 15px rgba(0, 102, 255, 0.25)"
+            }}
           >
             <motion.span
               className="relative z-10 flex items-center"
@@ -181,7 +230,10 @@ export default function ModernHeroSection() {
               <ArrowRight className="h-5 w-5" />
             </motion.div>
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-neon-green to-electric-blue opacity-0 group-hover:opacity-100"
+              className="absolute inset-0 opacity-0 group-hover:opacity-100"
+              style={{
+                background: "linear-gradient(to right, #00FF88, #0066FF)"
+              }}
               transition={{ duration: 0.3 }}
             />
           </Link>
@@ -196,18 +248,21 @@ export default function ModernHeroSection() {
         >
           <Link
             href="#about"
-            className="flex flex-col items-center space-y-2 text-stellar-white/60 hover:text-electric-blue transition-colors duration-300"
+            className="flex flex-col items-center space-y-2 transition-colors duration-300"
+            style={{ color: "rgba(248, 250, 252, 0.6)" }}
           >
             <span className="text-sm">Scroll to explore</span>
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="w-6 h-10 border-2 border-current rounded-full flex justify-center"
+              className="w-6 h-10 border-2 rounded-full flex justify-center"
+              style={{ borderColor: "currentColor" }}
             >
               <motion.div
                 animate={{ y: [0, 12, 0] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="w-1 h-3 bg-current rounded-full mt-2"
+                className="w-1 h-3 rounded-full mt-2"
+                style={{ backgroundColor: "currentColor" }}
               />
             </motion.div>
           </Link>

@@ -24,15 +24,38 @@ export default function Home() {
         <ModernHeroSection />
 
         {/* About Section */}
-        <section id="about" className="relative bg-gradient-to-br from-deep-space via-space-gray to-cosmic-gray px-4 py-24 sm:px-6 lg:px-8">
-          <div className="absolute inset-0 cyber-grid opacity-30" />
+        <section 
+          id="about" 
+          className="relative px-4 py-24 sm:px-6 lg:px-8"
+          style={{
+            background: "linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 50%, #2D2D44 100%)"
+          }}
+        >
+          <div 
+            className="absolute inset-0 opacity-30"
+            style={{
+              backgroundImage: "linear-gradient(rgba(0, 102, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 102, 255, 0.1) 1px, transparent 1px)",
+              backgroundSize: "50px 50px"
+            }}
+          />
           <div className="relative mx-auto max-w-7xl">
             <div className="mx-auto max-w-3xl text-center">
               <ScrollReveal>
-                <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-electric-blue to-neon-green bg-clip-text text-transparent sm:text-4xl">
+                <h2 
+                  className="text-3xl font-bold tracking-tight sm:text-4xl"
+                  style={{
+                    background: "linear-gradient(to right, #0066FF, #00FF88)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text"
+                  }}
+                >
                   About Solarithm
                 </h2>
-                <p className="mt-4 text-lg text-stellar-white/80">
+                <p 
+                  className="mt-4 text-lg"
+                  style={{ color: "rgba(248, 250, 252, 0.8)" }}
+                >
                   We're building the next generation of solar intelligence tools to empower the renewable energy
                   revolution.
                 </p>
@@ -42,14 +65,17 @@ export default function Home() {
             <div className="mt-20 grid gap-8 md:grid-cols-2">
               <ScrollReveal direction="left">
                 <div className="flex flex-col justify-center">
-                  <h3 className="text-2xl font-bold text-electric-blue">Our Mission</h3>
-                  <p className="mt-4 text-lg text-stellar-white/80">
+                  <h3 className="text-2xl font-bold" style={{ color: "#0066FF" }}>Our Mission</h3>
+                  <p 
+                    className="mt-4 text-lg"
+                    style={{ color: "rgba(248, 250, 252, 0.8)" }}
+                  >
                     Solarithm combines cutting-edge data analytics with solar industry expertise to provide actionable
                     insights for businesses. We're on a mission to accelerate solar adoption by making market intelligence
                     accessible, accurate, and actionable.
                   </p>
                   <div className="mt-8">
-                    <h4 className="text-xl font-semibold text-neon-green">Who We Serve</h4>
+                    <h4 className="text-xl font-semibold" style={{ color: "#00FF88" }}>Who We Serve</h4>
                     <ul className="mt-4 space-y-3">
                       {[
                         "Solar installation companies",
@@ -59,8 +85,8 @@ export default function Home() {
                         "Clean energy investors",
                       ].map((item, index) => (
                         <li key={index} className="flex items-center">
-                          <CheckCircle className="mr-2 h-5 w-5 text-neon-green" />
-                          <span className="text-stellar-white/80">{item}</span>
+                          <CheckCircle className="mr-2 h-5 w-5" style={{ color: "#00FF88" }} />
+                          <span style={{ color: "rgba(248, 250, 252, 0.8)" }}>{item}</span>
                         </li>
                       ))}
                     </ul>
@@ -69,14 +95,25 @@ export default function Home() {
               </ScrollReveal>
               
               <ScrollReveal direction="right">
-                <div className="relative h-[400px] overflow-hidden rounded-xl shadow-xl sm:h-[500px] glass">
+                <div 
+                  className="relative h-[400px] overflow-hidden rounded-xl shadow-xl sm:h-[500px]"
+                  style={{
+                    backgroundColor: "rgba(248, 250, 252, 0.1)",
+                    backdropFilter: "blur(10px)"
+                  }}
+                >
                   <Image 
                     src="https://images.pexels.com/photos/9875414/pexels-photo-9875414.jpeg" 
                     alt="Solar panels with futuristic overlay" 
                     fill 
                     className="object-cover" 
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-electric-blue/20 to-transparent" />
+                  <div 
+                    className="absolute inset-0"
+                    style={{
+                      background: "linear-gradient(to top, rgba(0, 102, 255, 0.2), transparent)"
+                    }}
+                  />
                 </div>
               </ScrollReveal>
             </div>
@@ -84,15 +121,37 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="relative bg-gradient-to-br from-cosmic-gray via-space-gray to-deep-space px-4 py-24 sm:px-6 lg:px-8">
-          <div className="absolute inset-0 neural-network opacity-20" />
+        <section 
+          id="features" 
+          className="relative px-4 py-24 sm:px-6 lg:px-8"
+          style={{
+            background: "linear-gradient(135deg, #2D2D44 0%, #1A1A2E 50%, #0A0A0F 100%)"
+          }}
+        >
+          <div 
+            className="absolute inset-0 opacity-20"
+            style={{
+              background: "radial-gradient(circle at 25% 25%, rgba(0, 255, 136, 0.2) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.2) 0%, transparent 50%)"
+            }}
+          />
           <div className="relative mx-auto max-w-7xl">
             <ScrollReveal>
               <div className="mx-auto max-w-3xl text-center">
-                <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-neon-green to-cyber-purple bg-clip-text text-transparent sm:text-4xl">
+                <h2 
+                  className="text-3xl font-bold tracking-tight sm:text-4xl"
+                  style={{
+                    background: "linear-gradient(to right, #00FF88, #8B5CF6)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text"
+                  }}
+                >
                   Feature Highlights
                 </h2>
-                <p className="mt-4 text-lg text-stellar-white/80">
+                <p 
+                  className="mt-4 text-lg"
+                  style={{ color: "rgba(248, 250, 252, 0.8)" }}
+                >
                   Powerful tools designed to transform how you approach solar projects and market analysis.
                 </p>
               </div>
@@ -100,25 +159,25 @@ export default function Home() {
 
             <div className="mt-20 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               <FeatureCard
-                icon={<MapPin className="h-10 w-10 text-neon-green" />}
+                icon={<MapPin className="h-10 w-10" style={{ color: "#00FF88" }} />}
                 title="Smart Solar Zone Mapping"
                 description="Identify optimal installation zones with AI-powered geographic analysis and solar potential mapping."
                 delay={0.1}
               />
               <FeatureCard
-                icon={<LineChart className="h-10 w-10 text-electric-blue" />}
+                icon={<LineChart className="h-10 w-10" style={{ color: "#0066FF" }} />}
                 title="ROI & Cost Calculator"
                 description="Precise financial modeling tools to forecast returns and optimize investment decisions."
                 delay={0.2}
               />
               <FeatureCard
-                icon={<Globe className="h-10 w-10 text-cyber-purple" />}
+                icon={<Globe className="h-10 w-10" style={{ color: "#8B5CF6" }} />}
                 title="IoT Climate Data Integration"
                 description="Real-time weather and climate data integration for accurate performance predictions."
                 delay={0.3}
               />
               <FeatureCard
-                icon={<Zap className="h-10 w-10 text-solar-orange" />}
+                icon={<Zap className="h-10 w-10" style={{ color: "#FF6B35" }} />}
                 title="Lead Generator for Sales Teams"
                 description="Convert market insights into qualified leads with our intelligent prospecting tools."
                 delay={0.4}
@@ -128,22 +187,50 @@ export default function Home() {
         </section>
 
         {/* Roadmap Section */}
-        <section id="roadmap" className="relative bg-gradient-to-br from-deep-space to-space-gray px-4 py-24 sm:px-6 lg:px-8">
-          <div className="absolute inset-0 cyber-grid opacity-20" />
+        <section 
+          id="roadmap" 
+          className="relative px-4 py-24 sm:px-6 lg:px-8"
+          style={{
+            background: "linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 100%)"
+          }}
+        >
+          <div 
+            className="absolute inset-0 opacity-20"
+            style={{
+              backgroundImage: "linear-gradient(rgba(0, 102, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 102, 255, 0.1) 1px, transparent 1px)",
+              backgroundSize: "50px 50px"
+            }}
+          />
           <div className="relative mx-auto max-w-7xl">
             <div className="mx-auto max-w-3xl text-center">
               <ScrollReveal>
-                <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-quantum-gold to-solar-orange bg-clip-text text-transparent sm:text-4xl">
+                <h2 
+                  className="text-3xl font-bold tracking-tight sm:text-4xl"
+                  style={{
+                    background: "linear-gradient(to right, #FFD700, #FF6B35)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text"
+                  }}
+                >
                   Product Roadmap
                 </h2>
-                <p className="mt-4 text-lg text-stellar-white/80">
+                <p 
+                  className="mt-4 text-lg"
+                  style={{ color: "rgba(248, 250, 252, 0.8)" }}
+                >
                   Our journey to revolutionize solar market intelligence.
                 </p>
               </ScrollReveal>
             </div>
 
             <div className="relative mt-20">
-              <div className="absolute left-1/2 h-full w-1 -translate-x-1/2 bg-gradient-to-b from-electric-blue via-neon-green to-cyber-purple opacity-50"></div>
+              <div 
+                className="absolute left-1/2 h-full w-1 -translate-x-1/2 opacity-50"
+                style={{
+                  background: "linear-gradient(to bottom, #0066FF, #00FF88, #8B5CF6)"
+                }}
+              ></div>
 
               <div className="space-y-20">
                 <RoadmapItem
@@ -177,15 +264,37 @@ export default function Home() {
         </section>
 
         {/* Blog Section */}
-        <section id="blog" className="relative bg-gradient-to-br from-space-gray to-cosmic-gray px-4 py-24 sm:px-6 lg:px-8">
-          <div className="absolute inset-0 neural-network opacity-10" />
+        <section 
+          id="blog" 
+          className="relative px-4 py-24 sm:px-6 lg:px-8"
+          style={{
+            background: "linear-gradient(135deg, #1A1A2E 0%, #2D2D44 100%)"
+          }}
+        >
+          <div 
+            className="absolute inset-0 opacity-10"
+            style={{
+              background: "radial-gradient(circle at 25% 25%, rgba(0, 255, 136, 0.2) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.2) 0%, transparent 50%)"
+            }}
+          />
           <div className="relative mx-auto max-w-7xl">
             <div className="mx-auto max-w-3xl text-center">
               <ScrollReveal>
-                <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-cyber-purple to-electric-blue bg-clip-text text-transparent sm:text-4xl">
+                <h2 
+                  className="text-3xl font-bold tracking-tight sm:text-4xl"
+                  style={{
+                    background: "linear-gradient(to right, #8B5CF6, #0066FF)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text"
+                  }}
+                >
                   Latest Insights
                 </h2>
-                <p className="mt-4 text-lg text-stellar-white/80">
+                <p 
+                  className="mt-4 text-lg"
+                  style={{ color: "rgba(248, 250, 252, 0.8)" }}
+                >
                   Explore our latest thoughts on the solar industry and market trends.
                 </p>
               </ScrollReveal>
@@ -221,15 +330,38 @@ export default function Home() {
         </section>
 
         {/* Testimonials Section */}
-        <section id="testimonials" className="relative bg-gradient-to-br from-cosmic-gray to-deep-space px-4 py-24 sm:px-6 lg:px-8">
-          <div className="absolute inset-0 cyber-grid opacity-20" />
+        <section 
+          id="testimonials" 
+          className="relative px-4 py-24 sm:px-6 lg:px-8"
+          style={{
+            background: "linear-gradient(135deg, #2D2D44 0%, #0A0A0F 100%)"
+          }}
+        >
+          <div 
+            className="absolute inset-0 opacity-20"
+            style={{
+              backgroundImage: "linear-gradient(rgba(0, 102, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 102, 255, 0.1) 1px, transparent 1px)",
+              backgroundSize: "50px 50px"
+            }}
+          />
           <div className="relative mx-auto max-w-7xl">
             <ScrollReveal>
               <div className="mx-auto max-w-3xl text-center mb-12">
-                <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-neon-green to-quantum-gold bg-clip-text text-transparent sm:text-4xl">
+                <h2 
+                  className="text-3xl font-bold tracking-tight sm:text-4xl"
+                  style={{
+                    background: "linear-gradient(to right, #00FF88, #FFD700)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text"
+                  }}
+                >
                   What Our Users Say
                 </h2>
-                <p className="mt-4 text-lg text-stellar-white/80">
+                <p 
+                  className="mt-4 text-lg"
+                  style={{ color: "rgba(248, 250, 252, 0.8)" }}
+                >
                   Hear from solar professionals and businesses using Solarithm across India
                 </p>
               </div>
@@ -292,23 +424,49 @@ export default function Home() {
         {/* Early Access Form Section */}
         <section
           id="early-access"
-          className="relative bg-gradient-to-br from-deep-space via-space-gray to-cosmic-gray px-4 py-24 sm:px-6 lg:px-8"
+          className="relative px-4 py-24 sm:px-6 lg:px-8"
+          style={{
+            background: "linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 50%, #2D2D44 100%)"
+          }}
         >
-          <div className="absolute inset-0 neural-network opacity-30" />
+          <div 
+            className="absolute inset-0 opacity-30"
+            style={{
+              background: "radial-gradient(circle at 25% 25%, rgba(0, 255, 136, 0.2) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.2) 0%, transparent 50%)"
+            }}
+          />
           <div className="relative mx-auto max-w-7xl">
             <div className="mx-auto max-w-3xl text-center">
               <ScrollReveal>
-                <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-electric-blue to-neon-green bg-clip-text text-transparent sm:text-4xl">
+                <h2 
+                  className="text-3xl font-bold tracking-tight sm:text-4xl"
+                  style={{
+                    background: "linear-gradient(to right, #0066FF, #00FF88)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text"
+                  }}
+                >
                   Get Early Access
                 </h2>
-                <p className="mt-4 text-lg text-stellar-white/80">
+                <p 
+                  className="mt-4 text-lg"
+                  style={{ color: "rgba(248, 250, 252, 0.8)" }}
+                >
                   Join our waitlist to be among the first to experience Solarithm when we launch.
                 </p>
               </ScrollReveal>
             </div>
 
             <ScrollReveal delay={0.2}>
-              <div className="mt-12 rounded-xl glass p-8 shadow-xl border border-electric-blue/20">
+              <div 
+                className="mt-12 rounded-xl p-8 shadow-xl border"
+                style={{
+                  backgroundColor: "rgba(248, 250, 252, 0.1)",
+                  backdropFilter: "blur(10px)",
+                  borderColor: "rgba(0, 102, 255, 0.2)"
+                }}
+              >
                 <EarlyAccessForm />
               </div>
             </ScrollReveal>

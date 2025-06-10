@@ -209,11 +209,12 @@ export default function CyberBackground({
         {[...Array(5)].map((_, i) => (
           <motion.div
             key={`stream-${i}`}
-            className="absolute w-1 bg-gradient-to-b from-electric-blue via-neon-green to-transparent"
+            className="absolute w-1"
             style={{
               height: "200px",
               left: `${10 + i * 20}%`,
               top: "-200px",
+              background: "linear-gradient(to bottom, #0066FF, #00FF88, transparent)"
             }}
             animate={{
               y: ["0vh", "120vh"],

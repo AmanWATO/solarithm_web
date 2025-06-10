@@ -38,10 +38,26 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="relative bg-gradient-to-br from-deep-space via-space-gray to-cosmic-gray px-4 py-12 text-stellar-white sm:px-6 lg:px-8 overflow-hidden">
+    <footer 
+      className="relative px-4 py-12 text-[#F8FAFC] sm:px-6 lg:px-8 overflow-hidden"
+      style={{
+        background: "linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 50%, #2D2D44 100%)"
+      }}
+    >
       {/* Background effects */}
-      <div className="absolute inset-0 cyber-grid opacity-10" />
-      <div className="absolute inset-0 neural-network opacity-5" />
+      <div 
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage: "linear-gradient(rgba(0, 102, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 102, 255, 0.1) 1px, transparent 1px)",
+          backgroundSize: "50px 50px"
+        }}
+      />
+      <div 
+        className="absolute inset-0 opacity-5"
+        style={{
+          background: "radial-gradient(circle at 25% 25%, rgba(0, 255, 136, 0.2) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.2) 0%, transparent 50%)"
+        }}
+      />
       
       <div className="relative mx-auto max-w-7xl">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -54,12 +70,23 @@ export default function Footer() {
             className="lg:col-span-1"
           >
             <div className="flex items-center mb-4">
-              <ModernSolarIcon size={32} className="text-electric-blue" />
-              <h3 className="ml-3 text-lg font-semibold bg-gradient-to-r from-electric-blue to-neon-green bg-clip-text text-transparent">
+              <ModernSolarIcon size={32} className="text-[#0066FF]" />
+              <h3 
+                className="ml-3 text-lg font-semibold"
+                style={{
+                  background: "linear-gradient(to right, #0066FF, #00FF88)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text"
+                }}
+              >
                 Solarithm
               </h3>
             </div>
-            <p className="mb-6 text-sm text-stellar-white/70 leading-relaxed">
+            <p 
+              className="mb-6 text-sm leading-relaxed"
+              style={{ color: "rgba(248, 250, 252, 0.7)" }}
+            >
               The intelligent solar market platform designed for energy companies, startups, and analysts. 
               Transforming sunlight into strategic insights.
             </p>
@@ -70,20 +97,35 @@ export default function Footer() {
                 <motion.a
                   key={social.label}
                   href={social.href}
-                  className="group relative p-2 rounded-lg glass border border-electric-blue/20 hover:border-neon-green/40 transition-all duration-300"
-                  whileHover={{ scale: 1.1, y: -2 }}
+                  className="group relative p-2 rounded-lg border transition-all duration-300"
+                  style={{
+                    backgroundColor: "rgba(248, 250, 252, 0.1)",
+                    backdropFilter: "blur(10px)",
+                    borderColor: "rgba(0, 102, 255, 0.2)"
+                  }}
+                  whileHover={{ 
+                    scale: 1.1, 
+                    y: -2,
+                    borderColor: "rgba(0, 255, 136, 0.4)"
+                  }}
                   whileTap={{ scale: 0.95 }}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <social.icon className="h-4 w-4 text-stellar-white/70 group-hover:text-neon-green transition-colors duration-300" />
+                  <social.icon 
+                    className="h-4 w-4 transition-colors duration-300" 
+                    style={{ 
+                      color: "rgba(248, 250, 252, 0.7)"
+                    }}
+                  />
                   <span className="sr-only">{social.label}</span>
                   
                   {/* Hover glow */}
                   <motion.div
-                    className="absolute inset-0 bg-neon-green/20 rounded-lg opacity-0 group-hover:opacity-100 blur-sm"
+                    className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 blur-sm"
+                    style={{ backgroundColor: "rgba(0, 255, 136, 0.2)" }}
                     transition={{ duration: 0.3 }}
                   />
                 </motion.a>
@@ -98,7 +140,7 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <h3 className="mb-4 text-lg font-semibold text-electric-blue">Navigation</h3>
+            <h3 className="mb-4 text-lg font-semibold" style={{ color: "#0066FF" }}>Navigation</h3>
             <ul className="space-y-2 text-sm">
               {navigationLinks.map((link, index) => (
                 <motion.li
@@ -110,11 +152,13 @@ export default function Footer() {
                 >
                   <Link
                     href={link.href}
-                    className="group relative inline-block text-stellar-white/70 hover:text-neon-green transition-colors duration-300"
+                    className="group relative inline-block transition-colors duration-300"
+                    style={{ color: "rgba(248, 250, 252, 0.7)" }}
                   >
                     {link.name}
                     <motion.span
-                      className="absolute -bottom-1 left-0 h-0.5 bg-neon-green"
+                      className="absolute -bottom-1 left-0 h-0.5"
+                      style={{ backgroundColor: "#00FF88" }}
                       initial={{ width: 0 }}
                       whileHover={{ width: "100%" }}
                       transition={{ duration: 0.3 }}
@@ -132,7 +176,7 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h3 className="mb-4 text-lg font-semibold text-cyber-purple">Legal</h3>
+            <h3 className="mb-4 text-lg font-semibold" style={{ color: "#8B5CF6" }}>Legal</h3>
             <ul className="space-y-2 text-sm">
               {legalLinks.map((link, index) => (
                 <motion.li
@@ -144,11 +188,13 @@ export default function Footer() {
                 >
                   <Link
                     href={link.href}
-                    className="group relative inline-block text-stellar-white/70 hover:text-cyber-purple transition-colors duration-300"
+                    className="group relative inline-block transition-colors duration-300"
+                    style={{ color: "rgba(248, 250, 252, 0.7)" }}
                   >
                     {link.name}
                     <motion.span
-                      className="absolute -bottom-1 left-0 h-0.5 bg-cyber-purple"
+                      className="absolute -bottom-1 left-0 h-0.5"
+                      style={{ backgroundColor: "#8B5CF6" }}
                       initial={{ width: 0 }}
                       whileHover={{ width: "100%" }}
                       transition={{ duration: 0.3 }}
@@ -166,7 +212,7 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
           >
-            <h3 className="mb-4 text-lg font-semibold text-quantum-gold">Contact</h3>
+            <h3 className="mb-4 text-lg font-semibold" style={{ color: "#FFD700" }}>Contact</h3>
             <ul className="space-y-3 text-sm">
               {contactInfo.map((contact, index) => (
                 <motion.li
@@ -178,9 +224,10 @@ export default function Footer() {
                 >
                   <Link
                     href={contact.href}
-                    className="group flex items-start space-x-3 text-stellar-white/70 hover:text-quantum-gold transition-colors duration-300"
+                    className="group flex items-start space-x-3 transition-colors duration-300"
+                    style={{ color: "rgba(248, 250, 252, 0.7)" }}
                   >
-                    <contact.icon className="h-4 w-4 mt-0.5 flex-shrink-0 group-hover:text-quantum-gold transition-colors duration-300" />
+                    <contact.icon className="h-4 w-4 mt-0.5 flex-shrink-0 transition-colors duration-300" />
                     <span className="leading-relaxed">{contact.text}</span>
                   </Link>
                 </motion.li>
@@ -195,16 +242,27 @@ export default function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
-          className="mt-12 border-t border-electric-blue/20 pt-8"
+          className="mt-12 border-t pt-8"
+          style={{ borderTopColor: "rgba(0, 102, 255, 0.2)" }}
         >
           <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
-            <p className="text-sm text-stellar-white/60">
+            <p 
+              className="text-sm"
+              style={{ color: "rgba(248, 250, 252, 0.6)" }}
+            >
               &copy; {new Date().getFullYear()} Solarithm. All rights reserved.
             </p>
             
             {/* Animated tagline */}
             <motion.p
-              className="text-sm bg-gradient-to-r from-electric-blue via-neon-green to-cyber-purple bg-clip-text text-transparent font-medium"
+              className="text-sm font-medium"
+              style={{
+                background: "linear-gradient(to right, #0066FF, #00FF88, #8B5CF6)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                backgroundSize: "200% 200%"
+              }}
               animate={{
                 backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
               }}
@@ -212,9 +270,6 @@ export default function Footer() {
                 duration: 3,
                 repeat: Infinity,
                 ease: "linear",
-              }}
-              style={{
-                backgroundSize: "200% 200%",
               }}
             >
               Powering the future of solar intelligence
@@ -225,7 +280,10 @@ export default function Footer() {
       
       {/* Corner decorations */}
       <motion.div
-        className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-electric-blue/10 to-transparent"
+        className="absolute bottom-0 right-0 w-32 h-32"
+        style={{
+          background: "linear-gradient(to top left, rgba(0, 102, 255, 0.1), transparent)"
+        }}
         animate={{
           scale: [1, 1.1, 1],
           opacity: [0.3, 0.6, 0.3],

@@ -51,9 +51,14 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? "bg-deep-space/90 backdrop-blur-xl border-b border-electric-blue/20 shadow-lg shadow-electric-blue/10" 
-          : "bg-deep-space/50 backdrop-blur-md"
+          ? "backdrop-blur-xl border-b shadow-lg" 
+          : "backdrop-blur-md"
       }`}
+      style={{
+        backgroundColor: isScrolled ? "rgba(10, 10, 15, 0.9)" : "rgba(10, 10, 15, 0.5)",
+        borderBottomColor: isScrolled ? "rgba(0, 102, 255, 0.2)" : "transparent",
+        boxShadow: isScrolled ? "0 4px 20px rgba(0, 102, 255, 0.1)" : "none"
+      }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
@@ -64,9 +69,10 @@ export default function Navbar() {
           >
             <Link href="/" className="flex items-center group">
               <div className="relative">
-                <ModernSolarIcon size={40} className="text-electric-blue" />
+                <ModernSolarIcon size={40} className="text-[#0066FF]" />
                 <motion.div
-                  className="absolute inset-0 rounded-full bg-electric-blue/20"
+                  className="absolute inset-0 rounded-full"
+                  style={{ backgroundColor: "rgba(0, 102, 255, 0.2)" }}
                   animate={{
                     scale: [1, 1.2, 1],
                     opacity: [0.5, 0.8, 0.5],
@@ -79,7 +85,13 @@ export default function Navbar() {
                 />
               </div>
               <motion.span 
-                className="ml-3 text-xl font-bold bg-gradient-to-r from-electric-blue via-neon-green to-cyber-purple bg-clip-text text-transparent"
+                className="ml-3 text-xl font-bold"
+                style={{
+                  background: "linear-gradient(to right, #0066FF, #00FF88, #8B5CF6)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text"
+                }}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
@@ -100,13 +112,16 @@ export default function Navbar() {
                 >
                   <Link
                     href={link.href}
-                    className={`relative text-sm font-medium transition-all duration-300 hover:text-neon-green group ${
-                      isActive(link.href) ? "text-electric-blue" : "text-stellar-white"
+                    className={`relative text-sm font-medium transition-all duration-300 hover:text-[#00FF88] group ${
+                      isActive(link.href) ? "text-[#0066FF]" : "text-[#F8FAFC]"
                     }`}
                   >
                     {link.name}
                     <motion.span
-                      className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-electric-blue to-neon-green"
+                      className="absolute -bottom-1 left-0 h-0.5"
+                      style={{
+                        background: "linear-gradient(to right, #0066FF, #00FF88)"
+                      }}
                       initial={{ width: 0 }}
                       animate={{ width: isActive(link.href) ? "100%" : 0 }}
                       whileHover={{ width: "100%" }}
@@ -114,7 +129,11 @@ export default function Navbar() {
                     />
                     {isActive(link.href) && (
                       <motion.div
-                        className="absolute -inset-2 rounded-lg bg-electric-blue/10 border border-electric-blue/20"
+                        className="absolute -inset-2 rounded-lg border"
+                        style={{
+                          backgroundColor: "rgba(0, 102, 255, 0.1)",
+                          borderColor: "rgba(0, 102, 255, 0.2)"
+                        }}
                         layoutId="activeTab"
                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
                       />
@@ -133,11 +152,19 @@ export default function Navbar() {
             >
               <Link
                 href="/waitlist"
-                className="relative overflow-hidden rounded-full bg-gradient-to-r from-electric-blue to-neon-green px-6 py-2 text-sm font-medium text-deep-space transition-all duration-300 hover:shadow-lg hover:shadow-electric-blue/25 group"
+                className="relative overflow-hidden rounded-full px-6 py-2 text-sm font-medium transition-all duration-300 hover:shadow-lg group"
+                style={{
+                  background: "linear-gradient(to right, #0066FF, #00FF88)",
+                  color: "#0A0A0F",
+                  boxShadow: "0 4px 15px rgba(0, 102, 255, 0.25)"
+                }}
               >
                 <span className="relative z-10">Join Waitlist</span>
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-neon-green to-electric-blue opacity-0 group-hover:opacity-100"
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100"
+                  style={{
+                    background: "linear-gradient(to right, #00FF88, #0066FF)"
+                  }}
                   transition={{ duration: 0.3 }}
                 />
               </Link>
@@ -148,7 +175,11 @@ export default function Navbar() {
             <ThemeToggle />
             <motion.button
               type="button"
-              className="inline-flex items-center justify-center rounded-md p-2 text-stellar-white hover:bg-space-gray/50 hover:text-electric-blue transition-colors duration-200"
+              className="inline-flex items-center justify-center rounded-md p-2 transition-colors duration-200"
+              style={{
+                color: "#F8FAFC",
+                backgroundColor: "rgba(45, 45, 68, 0.5)"
+              }}
               onClick={toggleMenu}
               whileTap={{ scale: 0.95 }}
             >
@@ -191,7 +222,13 @@ export default function Navbar() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="md:hidden overflow-hidden"
           >
-            <div className="bg-space-gray/95 backdrop-blur-xl border-t border-electric-blue/20">
+            <div 
+              className="backdrop-blur-xl border-t"
+              style={{
+                backgroundColor: "rgba(45, 45, 68, 0.95)",
+                borderTopColor: "rgba(0, 102, 255, 0.2)"
+              }}
+            >
               <div className="space-y-1 px-4 pb-3 pt-2">
                 {navLinks.map((link, index) => (
                   <motion.div
@@ -202,9 +239,16 @@ export default function Navbar() {
                   >
                     <Link
                       href={link.href}
-                      className={`block rounded-md px-3 py-2 text-base font-medium transition-all duration-200 hover:bg-electric-blue/10 hover:text-neon-green ${
-                        isActive(link.href) ? "text-electric-blue bg-electric-blue/10" : "text-stellar-white"
+                      className={`block rounded-md px-3 py-2 text-base font-medium transition-all duration-200 ${
+                        isActive(link.href) 
+                          ? "text-[#0066FF]" 
+                          : "text-[#F8FAFC]"
                       }`}
+                      style={{
+                        backgroundColor: isActive(link.href) 
+                          ? "rgba(0, 102, 255, 0.1)" 
+                          : "transparent"
+                      }}
                       onClick={toggleMenu}
                     >
                       {link.name}
@@ -219,7 +263,12 @@ export default function Navbar() {
                 >
                   <Link
                     href="/waitlist"
-                    className="block rounded-md bg-gradient-to-r from-electric-blue to-neon-green px-3 py-2 text-base font-medium text-deep-space hover:shadow-lg hover:shadow-electric-blue/25 transition-all duration-300"
+                    className="block rounded-md px-3 py-2 text-base font-medium transition-all duration-300"
+                    style={{
+                      background: "linear-gradient(to right, #0066FF, #00FF88)",
+                      color: "#0A0A0F",
+                      boxShadow: "0 4px 15px rgba(0, 102, 255, 0.25)"
+                    }}
                     onClick={toggleMenu}
                   >
                     Join Waitlist
