@@ -71,7 +71,7 @@ const config = {
           800: "#1E293B",
           900: "#0F172A",
         },
-        'border': "hsl(var(--border))",
+        border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
