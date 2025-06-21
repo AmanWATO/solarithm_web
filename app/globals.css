@@ -132,11 +132,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-electric-blue rounded-full;
+  background-color: #0066FF;
+  @apply rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-electric-blue-dark;
+  background-color: #0052CC;
 }
 
 /* Cyber grid background */

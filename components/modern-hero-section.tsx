@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowRight, Sparkles, Zap, Globe } from "lucide-react"
+import { ArrowRight, Sparkles, Zap, Globe, PlayCircle } from "lucide-react"
 import ModernSolarIcon from "@/components/modern-solar-icon"
 
 export default function ModernHeroSection() {

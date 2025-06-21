@@ -29,10 +29,31 @@ export default function FeatureShowcase({
         <p className="mb-8 text-lg text-[#121212]">{description}</p>
         <ul className="space-y-4">
           {features.map((feature, index) => (
+            
+            <motion.div
+            key={index}
+            className="group relative overflow-hidden rounded-2xl border backdrop-blur-sm transition-all duration-700 hover:scale-[1.02]"
+            style={{
+              backgroundColor: "rgba(45, 45, 68, 0.3)",
+              borderColor: "rgba(0, 102, 255, 0.2)",
+              backdropFilter: "blur(20px)",
+              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)"
+            }}
+            initial={{ opacity: 0, y: 50, rotateX: 10 }}
+            whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+            transition={{ duration: 0.8, delay: index * 0.15 }}
+            viewport={{ once: true }}
+            whileHover={{
+              borderColor: "rgba(0, 255, 136, 0.5)",
+              boxShadow: "0 25px 50px rgba(0, 102, 255, 0.2), 0 0 0 1px rgba(0, 255, 136, 0.1)",
+              y: -5
+            }}
+          >
             <li key={index} className="flex items-start">
               <CheckCircle className="mr-3 h-5 w-5 flex-shrink-0 text-[#FF6B35]" />
               <span className="text-[#121212]">{feature}</span>
             </li>
+            </motion.div>
           ))}
         </ul>
       </div>

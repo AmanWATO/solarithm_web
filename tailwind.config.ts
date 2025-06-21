@@ -21,6 +21,16 @@ const config = {
     },
     extend: {
       colors: {
+        "electric-blue": {
+          DEFAULT: "#0066FF",
+          dark: "#0052CC",
+          light: "#3385FF",
+        },
+        "neon-green": {
+          DEFAULT: "#00FF88",
+          dark: "#00CC6A",
+          light: "#33FFAA",
+        },
         border: "oklch(var(--border))",
         input: "oklch(var(--input))",
         ring: "oklch(var(--ring))",
