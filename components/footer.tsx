@@ -6,7 +6,7 @@ import { motion } from "framer-motion"
 import { Facebook, Github, Instagram, Linkedin, Twitter, Mail, MapPin, Phone } from "lucide-react"
 import ModernSolarIcon from "@/components/modern-solar-icon"
 
-export default function Footer() {
+function Footer() {
   const socialLinks = [
     { icon: Twitter, href: "#", label: "Twitter" },
     { icon: Linkedin, href: "#", label: "LinkedIn" },
@@ -233,7 +233,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Corner decoration */}
       <motion.div
         className="absolute bottom-0 right-0 w-32 h-32 opacity-20"
         style={{
@@ -250,5 +249,8 @@ export default function Footer() {
         }}
       />
     </footer>
+
   )
 }
+
+export default Footer
