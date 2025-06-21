@@ -1,6 +1,11 @@
+
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, CheckCircle, Globe, LineChart, MapPin, Zap } from "lucide-react"
+import { motion, useScroll, useTransform, useInView } from "framer-motion"
+import { ArrowRight, CheckCircle, Globe, LineChart, MapPin, Zap, Star, Users, TrendingUp, Shield, Lightbulb, BarChart3 } from "lucide-react"
+import { useRef, useState, useEffect } from "react"
 
 import CyberBackground from "@/components/cyber-background"
 import EarlyAccessForm from "@/components/early-access-form"
@@ -13,466 +18,475 @@ import ScrollReveal from "@/components/scroll-reveal"
 import TestimonialCarousel from "@/components/testimonial-carousel"
 import AnimatedPageWrapper from "@/components/animated-page-wrapper"
 import ModernHeroSection from "@/components/modern-hero-section"
+import ModernSolarIcon from "@/components/modern-solar-icon"
+
+// Marquee component for infinite scrolling text
+const Marquee = ({ children, speed = 50 }: { children: React.ReactNode; speed?: number }) => {
+  return (
+    <div className="overflow-hidden whitespace-nowrap">
+      <motion.div
+        className="inline-block"
+        animate={{
+          x: [0, -1000],
+        }}
+        transition={{
+          x: {
+            repeat: Infinity,
+            repeatType: "loop",
+            duration: speed,
+            ease: "linear",
+          },
+        }}
+      >
+        {children}
+      </motion.div>
+    </div>
+  )
+}
+
+// Slideshow component for rotating content
+const Slideshow = ({ slides }: { slides: any[] }) => {
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length)
+    }, 4000)
+    return () => clearInterval(timer)
+  }, [slides.length])
+
+  return (
+    <div className="relative h-[600px] rounded-2xl overflow-hidden">
+      {slides.map((slide, index) => (
+        <motion.div
+          key={index}
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: index === currentSlide ? 1 : 0 }}
+          transition={{ duration: 1 }}
+        >
+          <Image
+            src={slide.image}
+            alt={slide.title}
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+          <div className="absolute bottom-8 left-8 right-8 text-white">
+            <h3 className="text-3xl font-bold mb-4">{slide.title}</h3>
+            <p className="text-lg opacity-90">{slide.description}</p>
+          </div>
+        </motion.div>
+      ))}
+      
+      {/* Slide indicators */}
+      <div className="absolute bottom-4 right-4 flex gap-2">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentSlide(index)}
+            className={`w-3 h-3 rounded-full transition-all ${
+              index === currentSlide ? 'bg-white' : 'bg-white/50'
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export default function Home() {
+  const heroRef = useRef(null)
+  const { scrollYProgress } = useScroll()
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%'])
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+
+  const testimonialSlides = [
+    {
+      image: "https://images.pexels.com/photos/2850290/pexels-photo-2850290.jpeg",
+      title: "Solar Innovation Hub",
+      description: "Leading the charge in renewable energy technology"
+    },
+    {
+      image: "https://images.pexels.com/photos/9875414/pexels-photo-9875414.jpeg",
+      title: "Smart Energy Solutions",
+      description: "Intelligent systems for maximum efficiency"
+    },
+    {
+      image: "https://images.pexels.com/photos/433308/pexels-photo-433308.jpeg",
+      title: "Sustainable Future",
+      description: "Building tomorrow's clean energy infrastructure"
+    }
+  ]
+
+  const stats = [
+    { number: "500+", label: "Solar Projects Analyzed" },
+    { number: "₹2.5M+", label: "Savings Generated" },
+    { number: "95%", label: "Accuracy Rate" },
+    { number: "24/7", label: "System Monitoring" }
+  ]
+
   return (
-    <div className="flex min-h-screen flex-col relative">
+    <div className="flex min-h-screen flex-col relative overflow-hidden">
       <CyberBackground />
       <Navbar />
-      <AnimatedPageWrapper>
-        {/* Modern Hero Section */}
-        <ModernHeroSection />
-
-        {/* About Section */}
-        <section 
-          id="about" 
-          className="relative px-4 py-24 sm:px-6 lg:px-8"
-          style={{
-            background: "linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 50%, #2D2D44 100%)"
-          }}
-        >
-          <div 
-            className="absolute inset-0 opacity-30"
-            style={{
-              backgroundImage: "linear-gradient(rgba(0, 102, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 102, 255, 0.1) 1px, transparent 1px)",
-              backgroundSize: "50px 50px"
-            }}
+      
+      {/* Hero Section with Parallax */}
+      <motion.section 
+        ref={heroRef}
+        style={{ y, opacity }}
+        className="relative min-h-screen flex items-center justify-center"
+      >
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.pexels.com/photos/9875414/pexels-photo-9875414.jpeg"
+            alt="Solar panels against blue sky"
+            fill
+            className="object-cover"
+            priority
           />
-          <div className="relative mx-auto max-w-7xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <ScrollReveal>
-                <h2 
-                  className="text-3xl font-bold tracking-tight sm:text-4xl"
-                  style={{
-                    background: "linear-gradient(to right, #0066FF, #00FF88)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text"
-                  }}
-                >
-                  About Solarithm
-                </h2>
-                <p 
-                  className="mt-4 text-lg"
-                  style={{ color: "rgba(248, 250, 252, 0.8)" }}
-                >
-                  We're building the next generation of solar intelligence tools to empower the renewable energy
-                  revolution.
-                </p>
-              </ScrollReveal>
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-800/80 to-slate-900/90" />
+        </div>
+        
+        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="mb-8 flex justify-center"
+          >
+            <div className="p-4 rounded-full bg-gradient-to-br from-solar-400 to-solar-600 shadow-2xl">
+              <ModernSolarIcon size={64} className="text-white" />
             </div>
+          </motion.div>
+          
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="text-5xl md:text-7xl font-bold mb-6 gradient-text"
+          >
+            Solarithm
+          </motion.h1>
+          
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.6 }}
+            className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed"
+          >
+            The AI-powered solar intelligence platform transforming renewable energy decisions
+          </motion.p>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.8 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
+            <Link
+              href="/waitlist"
+              className="btn-primary text-lg px-8 py-4 rounded-full hover:shadow-2xl hover:shadow-solar-500/30"
+            >
+              Join Early Access
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+            <Link
+              href="#features"
+              className="btn-outline text-lg px-8 py-4 rounded-full border-white text-white hover:bg-white hover:text-slate-900"
+            >
+              Explore Features
+            </Link>
+          </motion.div>
+        </div>
+        
+        {/* Floating elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(12)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-solar-400 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                opacity: [0.3, 1, 0.3],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+        </div>
+      </motion.section>
 
-            <div className="mt-20 grid gap-8 md:grid-cols-2">
-              <ScrollReveal direction="left">
-                <div className="flex flex-col justify-center">
-                  <h3 className="text-2xl font-bold" style={{ color: "#0066FF" }}>Our Mission</h3>
-                  <p 
-                    className="mt-4 text-lg"
-                    style={{ color: "rgba(248, 250, 252, 0.8)" }}
-                  >
-                    Solarithm combines cutting-edge data analytics with solar industry expertise to provide actionable
-                    insights for businesses. We're on a mission to accelerate solar adoption by making market intelligence
-                    accessible, accurate, and actionable.
-                  </p>
-                  <div className="mt-8">
-                    <h4 className="text-xl font-semibold" style={{ color: "#00FF88" }}>Who We Serve</h4>
-                    <ul className="mt-4 space-y-3">
-                      {[
-                        "Solar installation companies",
-                        "Energy startups",
-                        "Market analysts",
-                        "Utility companies",
-                        "Clean energy investors",
-                      ].map((item, index) => (
-                        <li key={index} className="flex items-center">
-                          <CheckCircle className="mr-2 h-5 w-5" style={{ color: "#00FF88" }} />
-                          <span style={{ color: "rgba(248, 250, 252, 0.8)" }}>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+      {/* Stats Marquee */}
+      <section className="bg-gradient-to-r from-solar-500 to-solar-600 py-6 overflow-hidden">
+        <Marquee speed={30}>
+          <div className="flex items-center space-x-16 text-white">
+            {stats.concat(stats).map((stat, index) => (
+              <div key={index} className="flex items-center space-x-4 px-8">
+                <div className="text-center">
+                  <div className="text-3xl font-bold">{stat.number}</div>
+                  <div className="text-sm opacity-90">{stat.label}</div>
                 </div>
-              </ScrollReveal>
-              
-              <ScrollReveal direction="right">
-                <div 
-                  className="relative h-[400px] overflow-hidden rounded-xl shadow-xl sm:h-[500px]"
-                  style={{
-                    backgroundColor: "rgba(248, 250, 252, 0.1)",
-                    backdropFilter: "blur(10px)"
-                  }}
-                >
-                  <Image 
-                    src="https://images.pexels.com/photos/9875414/pexels-photo-9875414.jpeg" 
-                    alt="Solar panels with futuristic overlay" 
-                    fill 
-                    className="object-cover" 
-                  />
-                  <div 
-                    className="absolute inset-0"
-                    style={{
-                      background: "linear-gradient(to top, rgba(0, 102, 255, 0.2), transparent)"
-                    }}
-                  />
-                </div>
-              </ScrollReveal>
-            </div>
-          </div>
-        </section>
-
-        {/* Features Section */}
-        <section 
-          id="features" 
-          className="relative px-4 py-24 sm:px-6 lg:px-8"
-          style={{
-            background: "linear-gradient(135deg, #2D2D44 0%, #1A1A2E 50%, #0A0A0F 100%)"
-          }}
-        >
-          <div 
-            className="absolute inset-0 opacity-20"
-            style={{
-              background: "radial-gradient(circle at 25% 25%, rgba(0, 255, 136, 0.2) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.2) 0%, transparent 50%)"
-            }}
-          />
-          <div className="relative mx-auto max-w-7xl">
-            <ScrollReveal>
-              <div className="mx-auto max-w-3xl text-center">
-                <h2 
-                  className="text-3xl font-bold tracking-tight sm:text-4xl"
-                  style={{
-                    background: "linear-gradient(to right, #00FF88, #8B5CF6)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text"
-                  }}
-                >
-                  Feature Highlights
-                </h2>
-                <p 
-                  className="mt-4 text-lg"
-                  style={{ color: "rgba(248, 250, 252, 0.8)" }}
-                >
-                  Powerful tools designed to transform how you approach solar projects and market analysis.
-                </p>
+                <div className="w-px h-12 bg-white/30" />
               </div>
-            </ScrollReveal>
-
-            <div className="mt-20 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              <FeatureCard
-                icon={<MapPin className="h-10 w-10" style={{ color: "#00FF88" }} />}
-                title="Smart Solar Zone Mapping"
-                description="Identify optimal installation zones with AI-powered geographic analysis and solar potential mapping."
-                delay={0.1}
-              />
-              <FeatureCard
-                icon={<LineChart className="h-10 w-10" style={{ color: "#0066FF" }} />}
-                title="ROI & Cost Calculator"
-                description="Precise financial modeling tools to forecast returns and optimize investment decisions."
-                delay={0.2}
-              />
-              <FeatureCard
-                icon={<Globe className="h-10 w-10" style={{ color: "#8B5CF6" }} />}
-                title="IoT Climate Data Integration"
-                description="Real-time weather and climate data integration for accurate performance predictions."
-                delay={0.3}
-              />
-              <FeatureCard
-                icon={<Zap className="h-10 w-10" style={{ color: "#FF6B35" }} />}
-                title="Lead Generator for Sales Teams"
-                description="Convert market insights into qualified leads with our intelligent prospecting tools."
-                delay={0.4}
-              />
-            </div>
+            ))}
           </div>
-        </section>
+        </Marquee>
+      </section>
 
-        {/* Roadmap Section */}
-        <section 
-          id="roadmap" 
-          className="relative px-4 py-24 sm:px-6 lg:px-8"
-          style={{
-            background: "linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 100%)"
-          }}
-        >
-          <div 
-            className="absolute inset-0 opacity-20"
-            style={{
-              backgroundImage: "linear-gradient(rgba(0, 102, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 102, 255, 0.1) 1px, transparent 1px)",
-              backgroundSize: "50px 50px"
-            }}
-          />
-          <div className="relative mx-auto max-w-7xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <ScrollReveal>
-                <h2 
-                  className="text-3xl font-bold tracking-tight sm:text-4xl"
-                  style={{
-                    background: "linear-gradient(to right, #FFD700, #FF6B35)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text"
-                  }}
-                >
-                  Product Roadmap
-                </h2>
-                <p 
-                  className="mt-4 text-lg"
-                  style={{ color: "rgba(248, 250, 252, 0.8)" }}
-                >
-                  Our journey to revolutionize solar market intelligence.
-                </p>
-              </ScrollReveal>
-            </div>
+      {/* Features Section with Scroll Slide Effect */}
+      <section className="py-24 bg-gradient-to-br from-slate-50 to-sky-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">
+              Intelligent Solar Solutions
+            </h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              Advanced analytics and AI-powered insights to optimize your solar investments
+            </p>
+          </motion.div>
 
-            <div className="relative mt-20">
-              <div 
-                className="absolute left-1/2 h-full w-1 -translate-x-1/2 opacity-50"
-                style={{
-                  background: "linear-gradient(to bottom, #0066FF, #00FF88, #8B5CF6)"
-                }}
-              ></div>
-
-              <div className="space-y-20">
-                <RoadmapItem
-                  date="Q1 2025"
-                  title="Beta Testing"
-                  description="Limited access to core features for select partners and early adopters."
-                  isActive={true}
-                />
-                <RoadmapItem
-                  date="Q2 2025"
-                  title="Pilot Programs"
-                  description="Expanded access with additional features and integration capabilities."
-                  isActive={false}
-                />
-                <RoadmapItem
-                  date="Q3 2025"
-                  title="Pre-Launch"
-                  description="Final refinements based on pilot feedback and performance data."
-                  isActive={false}
-                />
-                <RoadmapItem
-                  date="November 2025"
-                  title="Full Launch"
-                  description="Complete platform release with all features and enterprise support."
-                  isActive={false}
-                  isHighlighted={true}
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Blog Section */}
-        <section 
-          id="blog" 
-          className="relative px-4 py-24 sm:px-6 lg:px-8"
-          style={{
-            background: "linear-gradient(135deg, #1A1A2E 0%, #2D2D44 100%)"
-          }}
-        >
-          <div 
-            className="absolute inset-0 opacity-10"
-            style={{
-              background: "radial-gradient(circle at 25% 25%, rgba(0, 255, 136, 0.2) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.2) 0%, transparent 50%)"
-            }}
-          />
-          <div className="relative mx-auto max-w-7xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <ScrollReveal>
-                <h2 
-                  className="text-3xl font-bold tracking-tight sm:text-4xl"
-                  style={{
-                    background: "linear-gradient(to right, #8B5CF6, #0066FF)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text"
-                  }}
-                >
-                  Latest Insights
-                </h2>
-                <p 
-                  className="mt-4 text-lg"
-                  style={{ color: "rgba(248, 250, 252, 0.8)" }}
-                >
-                  Explore our latest thoughts on the solar industry and market trends.
-                </p>
-              </ScrollReveal>
-            </div>
-
-            <div className="mt-20 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              <ScrollReveal delay={0.1}>
-                <BlogCard
-                  title="Why Smart Solar Needs Smarter Data"
-                  excerpt="The future of solar depends on intelligent data analysis and predictive modeling to maximize efficiency and ROI."
-                  date="October 15, 2024"
-                  imageUrl="https://images.pexels.com/photos/9875414/pexels-photo-9875414.jpeg"
-                />
-              </ScrollReveal>
-              <ScrollReveal delay={0.2}>
-                <BlogCard
-                  title="5 Trends Reshaping Solar in 2025"
-                  excerpt="From AI-powered forecasting to new financing models, these trends are transforming the solar landscape."
-                  date="September 28, 2024"
-                  imageUrl="https://images.pexels.com/photos/9875414/pexels-photo-9875414.jpeg"
-                />
-              </ScrollReveal>
-              <ScrollReveal delay={0.3}>
-                <BlogCard
-                  title="The ROI Revolution in Solar Projects"
-                  excerpt="How new calculation methods and market intelligence are changing investment decisions in solar energy."
-                  date="September 10, 2024"
-                  imageUrl="https://images.pexels.com/photos/9875414/pexels-photo-9875414.jpeg"
-                />
-              </ScrollReveal>
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials Section */}
-        <section 
-          id="testimonials" 
-          className="relative px-4 py-24 sm:px-6 lg:px-8"
-          style={{
-            background: "linear-gradient(135deg, #2D2D44 0%, #0A0A0F 100%)"
-          }}
-        >
-          <div 
-            className="absolute inset-0 opacity-20"
-            style={{
-              backgroundImage: "linear-gradient(rgba(0, 102, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 102, 255, 0.1) 1px, transparent 1px)",
-              backgroundSize: "50px 50px"
-            }}
-          />
-          <div className="relative mx-auto max-w-7xl">
-            <ScrollReveal>
-              <div className="mx-auto max-w-3xl text-center mb-12">
-                <h2 
-                  className="text-3xl font-bold tracking-tight sm:text-4xl"
-                  style={{
-                    background: "linear-gradient(to right, #00FF88, #FFD700)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text"
-                  }}
-                >
-                  What Our Users Say
-                </h2>
-                <p 
-                  className="mt-4 text-lg"
-                  style={{ color: "rgba(248, 250, 252, 0.8)" }}
-                >
-                  Hear from solar professionals and businesses using Solarithm across India
-                </p>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.2}>
-              <TestimonialCarousel
-                testimonials={[
-                  {
-                    id: 1,
-                    name: "Rajesh Kumar",
-                    role: "CEO",
-                    company: "SunTech Solutions, Mumbai",
-                    image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg",
-                    quote:
-                      "Solarithm has transformed how we approach solar installations. The mapping tool alone has increased our efficiency by 40%, allowing us to identify optimal sites quickly and accurately.",
-                  },
-                  {
-                    id: 2,
-                    name: "Priya Sharma",
-                    role: "Head of Operations",
-                    company: "GreenEnergy India, Bengaluru",
-                    image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg",
-                    quote:
-                      "The ROI calculator has become an essential tool in our sales process. It provides transparent, accurate projections that have significantly improved our conversion rates.",
-                  },
-                  {
-                    id: 3,
-                    name: "Vikram Singh",
-                    role: "Solar Analyst",
-                    company: "SolarVision, Delhi",
-                    image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg",
-                    quote:
-                      "As an analyst, I need reliable data. Solarithm's integration of NASA climate data with local weather patterns gives me unprecedented accuracy in performance forecasting.",
-                  },
-                  {
-                    id: 4,
-                    name: "Ananya Patel",
-                    role: "Marketing Director",
-                    company: "SunPower India, Chennai",
-                    image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg",
-                    quote:
-                      "The lead generation tools have revolutionized our marketing strategy. We're now targeting high-potential customers with precision, resulting in a 35% increase in qualified leads.",
-                  },
-                  {
-                    id: 5,
-                    name: "Arjun Reddy",
-                    role: "Installation Manager",
-                    company: "BrightSolar, Hyderabad",
-                    image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg",
-                    quote:
-                      "The mobile app has been a game-changer for our field teams. Real-time data access and system monitoring capabilities have streamlined our installation and maintenance processes.",
-                  },
-                ]}
-              />
-            </ScrollReveal>
-          </div>
-        </section>
-
-        {/* Early Access Form Section */}
-        <section
-          id="early-access"
-          className="relative px-4 py-24 sm:px-6 lg:px-8"
-          style={{
-            background: "linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 50%, #2D2D44 100%)"
-          }}
-        >
-          <div 
-            className="absolute inset-0 opacity-30"
-            style={{
-              background: "radial-gradient(circle at 25% 25%, rgba(0, 255, 136, 0.2) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.2) 0%, transparent 50%)"
-            }}
-          />
-          <div className="relative mx-auto max-w-7xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <ScrollReveal>
-                <h2 
-                  className="text-3xl font-bold tracking-tight sm:text-4xl"
-                  style={{
-                    background: "linear-gradient(to right, #0066FF, #00FF88)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text"
-                  }}
-                >
-                  Get Early Access
-                </h2>
-                <p 
-                  className="mt-4 text-lg"
-                  style={{ color: "rgba(248, 250, 252, 0.8)" }}
-                >
-                  Join our waitlist to be among the first to experience Solarithm when we launch.
-                </p>
-              </ScrollReveal>
-            </div>
-
-            <ScrollReveal delay={0.2}>
-              <div 
-                className="mt-12 rounded-xl p-8 shadow-xl border"
-                style={{
-                  backgroundColor: "rgba(248, 250, 252, 0.1)",
-                  backdropFilter: "blur(10px)",
-                  borderColor: "rgba(0, 102, 255, 0.2)"
-                }}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                icon: <MapPin className="h-12 w-12 text-solar-500" />,
+                title: "Smart Location Analysis",
+                description: "AI-powered site assessment using satellite imagery and weather data",
+                image: "https://images.pexels.com/photos/2850290/pexels-photo-2850290.jpeg"
+              },
+              {
+                icon: <LineChart className="h-12 w-12 text-sky-500" />,
+                title: "ROI Optimization",
+                description: "Precise financial modeling with real-time market data",
+                image: "https://images.pexels.com/photos/159160/solar-panel-array-power-sun-electricity-159160.jpeg"
+              },
+              {
+                icon: <Globe className="h-12 w-12 text-forest-500" />,
+                title: "Climate Integration",
+                description: "Real-time weather data for accurate performance predictions",
+                image: "https://images.pexels.com/photos/433308/pexels-photo-433308.jpeg"
+              },
+              {
+                icon: <Zap className="h-12 w-12 text-solar-500" />,
+                title: "Performance Monitoring",
+                description: "24/7 system tracking with predictive maintenance alerts",
+                image: "https://images.pexels.com/photos/9875414/pexels-photo-9875414.jpeg"
+              },
+              {
+                icon: <Users className="h-12 w-12 text-sky-500" />,
+                title: "Lead Generation",
+                description: "Convert market insights into qualified prospects",
+                image: "https://images.pexels.com/photos/2850290/pexels-photo-2850290.jpeg"
+              },
+              {
+                icon: <BarChart3 className="h-12 w-12 text-forest-500" />,
+                title: "Market Intelligence",
+                description: "Comprehensive market analysis and competitor insights",
+                image: "https://images.pexels.com/photos/159160/solar-panel-array-power-sun-electricity-159160.jpeg"
+              }
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
               >
-                <EarlyAccessForm />
-              </div>
-            </ScrollReveal>
+                <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                  <Image
+                    src={feature.image}
+                    alt={feature.title}
+                    fill
+                    className="object-cover opacity-0 group-hover:opacity-10 transition-opacity duration-500"
+                  />
+                </div>
+                <div className="relative z-10">
+                  <div className="mb-6">{feature.icon}</div>
+                  <h3 className="text-xl font-bold mb-4 text-slate-900">{feature.title}</h3>
+                  <p className="text-slate-600 leading-relaxed">{feature.description}</p>
+                </div>
+                <motion.div
+                  className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-solar-200 transition-colors duration-300"
+                  whileHover={{ scale: 1.02 }}
+                />
+              </motion.div>
+            ))}
           </div>
-        </section>
-      </AnimatedPageWrapper>
+        </div>
+      </section>
+
+      {/* About Section with Slideshow */}
+      <section className="py-24 bg-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white">
+                Revolutionizing Solar Intelligence
+              </h2>
+              <p className="text-xl text-slate-300 mb-8 leading-relaxed">
+                We combine cutting-edge AI, satellite imagery, and real-time data to provide 
+                the most accurate solar market intelligence platform in India.
+              </p>
+              
+              <div className="space-y-4">
+                {[
+                  "AI-powered site analysis with 95% accuracy",
+                  "Real-time ROI calculations and market insights",
+                  "Comprehensive climate and weather integration",
+                  "Advanced lead generation and CRM tools"
+                ].map((feature, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="flex items-center space-x-3"
+                  >
+                    <CheckCircle className="h-6 w-6 text-solar-400 flex-shrink-0" />
+                    <span className="text-slate-300">{feature}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <Slideshow slides={testimonialSlides} />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Industry Recognition Marquee */}
+      <section className="py-12 bg-gradient-to-r from-sky-500 to-forest-500">
+        <div className="text-center mb-8">
+          <h3 className="text-2xl font-bold text-white">Trusted by Industry Leaders</h3>
+        </div>
+        <Marquee speed={40}>
+          <div className="flex items-center space-x-16 text-white">
+            {[
+              "MNRE Approved", "ISO 27001 Certified", "AI Excellence Award", 
+              "Green Tech Innovation", "Solar Industry Partner", "Clean Energy Alliance",
+              "MNRE Approved", "ISO 27001 Certified", "AI Excellence Award", 
+              "Green Tech Innovation", "Solar Industry Partner", "Clean Energy Alliance"
+            ].map((cert, index) => (
+              <div key={index} className="flex items-center space-x-4 px-6">
+                <Star className="h-6 w-6 text-yellow-300" />
+                <span className="text-lg font-medium whitespace-nowrap">{cert}</span>
+              </div>
+            ))}
+          </div>
+        </Marquee>
+      </section>
+
+      {/* Testimonials Scroll Slide */}
+      <section className="py-24 bg-gradient-to-br from-slate-50 to-sky-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">
+              What Industry Leaders Say
+            </h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              Hear from solar professionals transforming their businesses with Solarithm
+            </p>
+          </motion.div>
+
+          <TestimonialCarousel
+            testimonials={[
+              {
+                id: 1,
+                name: "Industry Professional",
+                role: "CEO",
+                company: "Leading Solar Company",
+                image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg",
+                quote: "Solarithm has transformed how we approach solar installations. The mapping tool alone has increased our efficiency by 40%."
+              },
+              {
+                id: 2,
+                name: "Energy Expert",
+                role: "Head of Operations", 
+                company: "Green Energy Solutions",
+                image: "https://images.pexels.com/photos/3777946/pexels-photo-3777946.jpeg",
+                quote: "The ROI calculator has become essential in our sales process. It provides transparent, accurate projections."
+              },
+              {
+                id: 3,
+                name: "Solar Analyst",
+                role: "Market Analyst",
+                company: "Solar Research Institute",
+                image: "https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg",
+                quote: "As an analyst, I need reliable data. Solarithm's integration gives unprecedented accuracy in forecasting."
+              }
+            ]}
+          />
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.pexels.com/photos/433308/pexels-photo-433308.jpeg"
+            alt="Solar installation"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95" />
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+              Ready to Transform Your Solar Business?
+            </h2>
+            <p className="text-xl text-slate-300 mb-8 max-w-3xl mx-auto">
+              Join hundreds of solar professionals already using Solarithm to make smarter, 
+              data-driven decisions. Get early access to our platform.
+            </p>
+            
+            <div className="glass rounded-2xl p-8 max-w-2xl mx-auto">
+              <EarlyAccessForm />
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   )
