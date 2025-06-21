@@ -6,29 +6,28 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import BlogCard from "@/components/blog-card"
 import { getBlogPost, getRelatedPosts } from "@/lib/blog"
-// Import the AnimatedPageWrapper
 import AnimatedPageWrapper from "@/components/animated-page-wrapper"
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
-// Wrap the content with AnimatedPageWrapper
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = getBlogPost(params.slug)
-  const relatedPosts = getRelatedPosts(params.slug, 3)
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params
+  const post = getBlogPost(slug)
+  const relatedPosts = getRelatedPosts(slug, 3)
 
   if (!post) {
     return (
       <div className="flex min-h-screen flex-col">
         <Navbar />
         <AnimatedPageWrapper>
-          <div className="flex flex-1 flex-col items-center justify-center">
-            <h1 className="text-3xl font-bold text-[#FFC857]">Blog Post Not Found</h1>
-            <p className="mt-4 text-lg text-[#121212]">The blog post you're looking for doesn't exist.</p>
-            <Link href="/blog" className="mt-8 inline-flex items-center text-[#FF6B35] hover:text-[#2EC4B6]">
+          <div className="flex flex-1 flex-col items-center justify-center py-20">
+            <h1 className="text-3xl font-bold gradient-text">Blog Post Not Found</h1>
+            <p className="mt-4 text-lg text-muted-foreground">The blog post you're looking for doesn't exist.</p>
+            <Link href="/blog" className="mt-8 btn-primary inline-flex items-center">
               <ArrowLeft className="mr-2 h-5 w-5" />
               Back to Blog
             </Link>
@@ -43,25 +42,27 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <AnimatedPageWrapper>
-        {/* Rest of the content remains the same */}
         {/* Hero Section */}
-        <section className="relative bg-[#1A1A2E] px-4 pt-32 pb-20 sm:px-6 lg:px-8">
-          <div className="absolute inset-0 z-0 opacity-20">
+        <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4 pt-32 pb-20 sm:px-6 lg:px-8 overflow-hidden">
+          <div className="absolute inset-0 pattern-dots opacity-20" />
+          <div className="absolute inset-0 z-0 opacity-30">
             <Image
               src={post.coverImage || "/placeholder.svg?height=600&width=1200"}
               alt={post.title}
               fill
               className="object-cover"
+              priority
+              sizes="100vw"
             />
           </div>
           <div className="relative z-10 mx-auto max-w-4xl text-center">
-            <div className="mb-4 inline-block rounded-full bg-[#1A1A2E]/50 px-4 py-1.5 text-sm font-medium text-[#EAEAEA] backdrop-blur-sm">
+            <div className="mb-4 inline-block rounded-full bg-solar-500/20 backdrop-blur-sm px-4 py-1.5 text-sm font-medium text-solar-300 border border-solar-500/30">
               {post.category}
             </div>
-            <h1 className="text-4xl font-extrabold tracking-tight text-[#FFC857] sm:text-5xl md:text-6xl">
+            <h1 className="text-responsive-xl font-display font-bold tracking-tight text-white mb-6">
               {post.title}
             </h1>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-[#EAEAEA]">
+            <div className="flex flex-wrap items-center justify-center gap-6 text-slate-300">
               <div className="flex items-center">
                 <User className="mr-2 h-4 w-4" />
                 <span>{post.author}</span>
@@ -79,37 +80,38 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         </section>
 
         {/* Blog Content */}
-        <section className="bg-[#F9F9F9] dark:bg-[#1A1A2E]/30 px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl">
-            <div className="overflow-hidden rounded-xl bg-[#F9F9F9] dark:bg-[#1A1A2E]/50 shadow-lg">
+        <section className="bg-background px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-4xl">
+            <article className="card-modern overflow-hidden">
               <div className="relative aspect-video">
                 <Image
                   src={post.coverImage || "/placeholder.svg?height=600&width=1200"}
                   alt={post.title}
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
                 />
               </div>
-              <div className="p-8">
-                <div className="prose prose-lg max-w-none prose-headings:text-[#1A1A2E] dark:prose-headings:text-[#EAEAEA] prose-a:text-[#FF6B35] dark:prose-invert">
+              <div className="p-8 md:p-12">
+                <div className="prose prose-lg max-w-none prose-headings:text-foreground prose-a:text-primary prose-strong:text-foreground prose-code:text-primary">
                   {post.content.map((section, index) => {
                     if (section.type === "paragraph") {
                       return (
-                        <p key={index} className="text-[#121212]">
+                        <p key={index} className="text-muted-foreground leading-relaxed mb-6">
                           {section.content}
                         </p>
                       )
                     } else if (section.type === "heading") {
                       return (
-                        <h2 key={index} className="mt-8 mb-4 text-2xl font-bold text-[#1A1A2E]">
+                        <h2 key={index} className="mt-12 mb-6 text-2xl md:text-3xl font-display font-bold text-foreground">
                           {section.content}
                         </h2>
                       )
                     } else if (section.type === "list") {
                       return (
-                        <ul key={index} className="my-4 list-disc pl-6">
+                        <ul key={index} className="my-6 space-y-2 list-disc pl-6">
                           {section.items.map((item, itemIndex) => (
-                            <li key={itemIndex} className="text-[#121212]">
+                            <li key={itemIndex} className="text-muted-foreground leading-relaxed">
                               {item}
                             </li>
                           ))}
@@ -117,17 +119,18 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                       )
                     } else if (section.type === "image") {
                       return (
-                        <div key={index} className="my-8">
-                          <div className="relative aspect-video overflow-hidden rounded-lg">
+                        <div key={index} className="my-12">
+                          <div className="relative aspect-video overflow-hidden rounded-xl shadow-lg">
                             <Image
                               src={section.src || "/placeholder.svg?height=400&width=800"}
                               alt={section.alt || "Blog image"}
                               fill
                               className="object-cover"
+                              sizes="(max-width: 768px) 100vw, 800px"
                             />
                           </div>
                           {section.caption && (
-                            <p className="mt-2 text-center text-sm italic text-[#121212]/70">{section.caption}</p>
+                            <p className="mt-4 text-center text-sm italic text-muted-foreground">{section.caption}</p>
                           )}
                         </div>
                       )
@@ -135,10 +138,14 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                       return (
                         <blockquote
                           key={index}
-                          className="my-6 border-l-4 border-solar-gold bg-[#EAEAEA]/30 p-4 italic text-[#121212]"
+                          className="my-8 border-l-4 border-primary bg-muted/30 p-6 italic text-foreground rounded-r-lg"
                         >
-                          {section.content}
-                          {section.author && <footer className="mt-2 text-right text-sm">— {section.author}</footer>}
+                          <p className="text-lg">{section.content}</p>
+                          {section.author && (
+                            <footer className="mt-3 text-right text-sm text-muted-foreground">
+                              — {section.author}
+                            </footer>
+                          )}
                         </blockquote>
                       )
                     }
@@ -147,83 +154,33 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                 </div>
 
                 {/* Tags */}
-                <div className="mt-8 flex flex-wrap gap-2">
+                <div className="mt-12 flex flex-wrap gap-2">
                   {post.tags.map((tag) => (
-                    <span key={tag} className="rounded-full bg-[#EAEAEA] px-3 py-1 text-sm font-medium text-[#121212]">
+                    <span key={tag} className="rounded-full bg-muted px-3 py-1 text-sm font-medium text-muted-foreground">
                       #{tag}
                     </span>
                   ))}
                 </div>
 
                 {/* Share */}
-                <div className="mt-8 flex items-center justify-between border-t border-cloud-gray pt-6">
-                  <div>
-                    <Link href="/blog" className="inline-flex items-center text-[#FF6B35] hover:text-[#2EC4B6]">
-                      <ArrowLeft className="mr-2 h-5 w-5" />
-                      Back to Blog
-                    </Link>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="mr-2 text-[#121212]">Share:</span>
-                    <div className="flex space-x-2">
+                <div className="mt-12 flex items-center justify-between border-t border-border pt-8">
+                  <Link href="/blog" className="btn-outline inline-flex items-center">
+                    <ArrowLeft className="mr-2 h-5 w-5" />
+                    Back to Blog
+                  </Link>
+                  <div className="flex items-center gap-4">
+                    <span className="text-muted-foreground">Share:</span>
+                    <div className="flex gap-2">
                       <button
-                        className="rounded-full bg-[#EAEAEA] p-2 text-[#121212] transition-colors hover:bg-[#FF6B35] hover:text-[#F9F9F9]"
+                        className="p-2 rounded-lg bg-muted hover:bg-primary hover:text-primary-foreground transition-colors focus-ring"
                         aria-label="Share on Twitter"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
                         </svg>
                       </button>
                       <button
-                        className="rounded-full bg-[#EAEAEA] p-2 text-[#121212] transition-colors hover:bg-[#FF6B35] hover:text-[#F9F9F9]"
-                        aria-label="Share on Facebook"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                        </svg>
-                      </button>
-                      <button
-                        className="rounded-full bg-[#EAEAEA] p-2 text-[#121212] transition-colors hover:bg-[#FF6B35] hover:text-[#F9F9F9]"
-                        aria-label="Share on LinkedIn"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                          <rect x="2" y="9" width="4" height="12"></rect>
-                          <circle cx="4" cy="4" r="2"></circle>
-                        </svg>
-                      </button>
-                      <button
-                        className="rounded-full bg-[#EAEAEA] p-2 text-[#121212] transition-colors hover:bg-[#FF6B35] hover:text-[#F9F9F9]"
+                        className="p-2 rounded-lg bg-muted hover:bg-primary hover:text-primary-foreground transition-colors focus-ring"
                         aria-label="Copy link"
                       >
                         <Share2 className="h-4 w-4" />
@@ -232,23 +189,20 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                   </div>
                 </div>
               </div>
-            </div>
+            </article>
 
             {/* Author Bio */}
-            <div className="mt-12 rounded-xl bg-[#EAEAEA] p-6">
-              <div className="flex flex-col items-center sm:flex-row sm:items-start">
-                <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-full">
-                  <Image
-                    src={post.authorImage || "/placeholder.svg?height=80&width=80"}
-                    alt={post.author}
-                    fill
-                    className="object-cover"
-                  />
+            <div className="mt-12 card-modern p-8">
+              <div className="flex flex-col items-center sm:flex-row sm:items-start gap-6">
+                <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-solar-400 to-solar-600 p-0.5">
+                  <div className="h-full w-full rounded-full bg-background flex items-center justify-center">
+                    <User className="h-8 w-8 text-primary" />
+                  </div>
                 </div>
-                <div className="mt-4 text-center sm:ml-6 sm:mt-0 sm:text-left">
-                  <h3 className="text-lg font-bold text-[#1A1A2E]">{post.author}</h3>
-                  <p className="text-sm text-[#2EC4B6]">{post.authorRole}</p>
-                  <p className="mt-2 text-[#121212]">{post.authorBio}</p>
+                <div className="text-center sm:text-left">
+                  <h3 className="text-xl font-display font-bold text-foreground">{post.author}</h3>
+                  <p className="text-sm text-primary font-medium">{post.authorRole}</p>
+                  <p className="mt-3 text-muted-foreground leading-relaxed">{post.authorBio}</p>
                 </div>
               </div>
             </div>
@@ -256,9 +210,11 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         </section>
 
         {/* Related Posts */}
-        <section className="bg-[#EAEAEA] px-4 py-16 sm:px-6 lg:px-8">
+        <section className="bg-muted/30 px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <h2 className="mb-12 text-center text-3xl font-bold text-[#FFC857]">Related Articles</h2>
+            <h2 className="mb-12 text-center text-responsive-lg font-display font-bold gradient-text">
+              Related Articles
+            </h2>
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {relatedPosts.map((post) => (
                 <Link key={post.slug} href={`/blog/${post.slug}`}>
@@ -276,22 +232,17 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         </section>
 
         {/* CTA Section */}
-        <section className="bg-[#1A1A2E] px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-[#FFC857] sm:text-4xl">
+        <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4 py-20 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-4xl text-center">
+            <h2 className="text-responsive-lg font-display font-bold text-white mb-6">
               Ready to transform your solar business?
             </h2>
-            <p className="mt-4 text-xl text-[#EAEAEA]">
+            <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
               Join our waitlist to be among the first to experience Solarithm's powerful features.
             </p>
-            <div className="mt-8">
-              <Link
-                href="/waitlist"
-                className="inline-flex items-center justify-center rounded-full bg-[#FFC857] px-8 py-3 text-lg font-medium text-[#121212] transition-all hover:bg-[#FFC857]/90 focus:outline-none focus:ring-2 focus:ring-solar-gold focus:ring-offset-2 focus:ring-offset-midnight-blue"
-              >
-                Join the Waitlist
-              </Link>
-            </div>
+            <Link href="/waitlist" className="btn-primary inline-flex items-center text-lg px-8 py-4">
+              Join the Waitlist
+            </Link>
           </div>
         </section>
       </AnimatedPageWrapper>
