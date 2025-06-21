@@ -3,18 +3,10 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Facebook, Github, Instagram, Linkedin, Twitter, Mail, MapPin, Phone } from "lucide-react"
+import { Instagram, Mail, MapPin, Phone } from "lucide-react"
 import ModernSolarIcon from "@/components/modern-solar-icon"
 
-function Footer() {
-  const socialLinks = [
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Github, href: "#", label: "GitHub" },
-  ]
-
+export default function Footer() {
   const navigationLinks = [
     { name: "Home", href: "/" },
     { name: "Dashboard", href: "/dashboard" },
@@ -72,31 +64,27 @@ function Footer() {
                 Transforming sunlight into strategic insights.
               </p>
 
-              {/* Social links */}
+              {/* Instagram only */}
               <div className="flex gap-3">
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    className="group relative p-3 rounded-lg bg-slate-800/50 backdrop-blur-sm hover:bg-orange-500/20 transition-all duration-300 border border-slate-700/50"
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    aria-label={social.label}
-                  >
-                    <social.icon className="h-5 w-5 text-slate-300 group-hover:text-orange-300 transition-colors" />
+                <motion.a
+                  href="#"
+                  className="group relative p-3 rounded-lg bg-slate-800/50 backdrop-blur-sm hover:bg-orange-500/20 transition-all duration-300 border border-slate-700/50"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                  aria-label="Instagram"
+                >
+                  <Instagram className="h-5 w-5 text-slate-300 group-hover:text-orange-300 transition-colors" />
 
-                    {/* Hover glow */}
-                    <motion.div
-                      className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 blur-sm"
-                      style={{ backgroundColor: "rgba(255, 149, 0, 0.2)" }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </motion.a>
-                ))}
+                  <motion.div
+                    className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 blur-sm"
+                    style={{ backgroundColor: "rgba(255, 149, 0, 0.2)" }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.a>
               </div>
             </motion.div>
 
@@ -211,7 +199,6 @@ function Footer() {
                 &copy; {new Date().getFullYear()} Solarithm. All rights reserved.
               </p>
 
-              {/* Animated tagline */}
               <motion.p
                 className="text-sm font-medium bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent"
                 animate={{
@@ -249,8 +236,5 @@ function Footer() {
         }}
       />
     </footer>
-
   )
 }
-
-export default Footer
