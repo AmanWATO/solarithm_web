@@ -2,14 +2,13 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Solarithm — Solar Market Intelligence Platform",
+  title: "Solarithm — Professional Solar Intelligence Platform",
   description:
-    "Solarithm is a solar market intelligence platform designed for energy companies, startups, and analysts. Launching November 2025.",
+    "The most advanced solar market intelligence platform designed for energy companies, startups, and analysts. Transform data into strategic advantage.",
 }
 
 export default function RootLayout({
@@ -18,11 +17,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   )

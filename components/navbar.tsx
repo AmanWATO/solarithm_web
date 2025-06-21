@@ -5,15 +5,13 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ThemeToggle } from "@/components/theme-toggle"
-import ModernSolarIcon from "@/components/modern-solar-icon"
 
 const navLinks = [
-  { name: "Dashboard", href: "/dashboard" },
-  { name: "Solar Map", href: "/solar-map" },
+  { name: "Platform", href: "/platform" },
+  { name: "Solutions", href: "/solutions" },
   { name: "Calculator", href: "/calculator" },
-  { name: "Roadmap", href: "/roadmap" },
-  { name: "Blog", href: "/blog" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" },
 ]
 
 export default function Navbar() {
@@ -27,7 +25,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
+      if (window.scrollY > 50) {
         setIsScrolled(true)
       } else {
         setIsScrolled(false)
@@ -49,60 +47,28 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? "backdrop-blur-xl border-b shadow-lg" 
-          : "backdrop-blur-md"
+          ? "bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm" 
+          : "bg-transparent"
       }`}
-      style={{
-        backgroundColor: isScrolled ? "rgba(10, 10, 15, 0.9)" : "rgba(10, 10, 15, 0.5)",
-        borderBottomColor: isScrolled ? "rgba(0, 102, 255, 0.2)" : "transparent",
-        boxShadow: isScrolled ? "0 4px 20px rgba(0, 102, 255, 0.1)" : "none"
-      }}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+      <div className="container">
+        <div className="flex h-20 items-center justify-between">
           <motion.div 
             className="flex items-center"
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
             <Link href="/" className="flex items-center group">
-              <div className="relative">
-                <ModernSolarIcon size={40} className="text-[#0066FF]" />
-                <motion.div
-                  className="absolute inset-0 rounded-full"
-                  style={{ backgroundColor: "rgba(0, 102, 255, 0.2)" }}
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.5, 0.8, 0.5],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
+              <div className="text-2xl font-bold text-black tracking-tight">
+                SOLARITHM
               </div>
-              <motion.span 
-                className="ml-3 text-xl font-bold"
-                style={{
-                  background: "linear-gradient(to right, #0066FF, #00FF88, #8B5CF6)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text"
-                }}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-              >
-                Solarithm
-              </motion.span>
             </Link>
           </motion.div>
 
-          <nav className="hidden md:block">
-            <ul className="flex space-x-8">
+          <nav className="hidden lg:block">
+            <ul className="flex space-x-12">
               {navLinks.map((link, index) => (
                 <motion.li 
                   key={link.name}
@@ -112,74 +78,40 @@ export default function Navbar() {
                 >
                   <Link
                     href={link.href}
-                    className={`relative text-sm font-medium transition-all duration-300 hover:text-[#00FF88] group ${
-                      isActive(link.href) ? "text-[#0066FF]" : "text-[#F8FAFC]"
+                    className={`relative text-sm font-medium transition-all duration-300 hover:text-black group ${
+                      isActive(link.href) ? "text-black" : "text-gray-600"
                     }`}
                   >
                     {link.name}
-                    <motion.span
-                      className="absolute -bottom-1 left-0 h-0.5"
-                      style={{
-                        background: "linear-gradient(to right, #0066FF, #00FF88)"
-                      }}
-                      initial={{ width: 0 }}
-                      animate={{ width: isActive(link.href) ? "100%" : 0 }}
-                      whileHover={{ width: "100%" }}
-                      transition={{ duration: 0.3 }}
+                    <span
+                      className={`absolute -bottom-1 left-0 h-0.5 bg-black transition-all duration-300 ${
+                        isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                      }`}
                     />
-                    {isActive(link.href) && (
-                      <motion.div
-                        className="absolute -inset-2 rounded-lg border"
-                        style={{
-                          backgroundColor: "rgba(0, 102, 255, 0.1)",
-                          borderColor: "rgba(0, 102, 255, 0.2)"
-                        }}
-                        layoutId="activeTab"
-                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                      />
-                    )}
                   </Link>
                 </motion.li>
               ))}
             </ul>
           </nav>
 
-          <div className="hidden md:flex items-center space-x-4">
-            <ThemeToggle />
+          <div className="hidden lg:flex items-center space-x-6">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <Link
-                href="/waitlist"
-                className="relative overflow-hidden rounded-full px-6 py-2 text-sm font-medium transition-all duration-300 hover:shadow-lg group"
-                style={{
-                  background: "linear-gradient(to right, #0066FF, #00FF88)",
-                  color: "#0A0A0F",
-                  boxShadow: "0 4px 15px rgba(0, 102, 255, 0.25)"
-                }}
+                href="/demo"
+                className="btn-primary"
               >
-                <span className="relative z-10">Join Waitlist</span>
-                <motion.div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100"
-                  style={{
-                    background: "linear-gradient(to right, #00FF88, #0066FF)"
-                  }}
-                  transition={{ duration: 0.3 }}
-                />
+                Request Demo
               </Link>
             </motion.div>
           </div>
 
-          <div className="md:hidden flex items-center space-x-2">
-            <ThemeToggle />
+          <div className="lg:hidden">
             <motion.button
               type="button"
-              className="inline-flex items-center justify-center rounded-md p-2 transition-colors duration-200"
-              style={{
-                color: "#F8FAFC",
-                backgroundColor: "rgba(45, 45, 68, 0.5)"
-              }}
+              className="inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:text-black transition-colors duration-200"
               onClick={toggleMenu}
               whileTap={{ scale: 0.95 }}
             >
@@ -220,60 +152,46 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden overflow-hidden"
+            className="lg:hidden overflow-hidden"
           >
-            <div 
-              className="backdrop-blur-xl border-t"
-              style={{
-                backgroundColor: "rgba(45, 45, 68, 0.95)",
-                borderTopColor: "rgba(0, 102, 255, 0.2)"
-              }}
-            >
-              <div className="space-y-1 px-4 pb-3 pt-2">
-                {navLinks.map((link, index) => (
+            <div className="bg-white border-t border-gray-200">
+              <div className="container py-6">
+                <div className="space-y-6">
+                  {navLinks.map((link, index) => (
+                    <motion.div
+                      key={link.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 * index, duration: 0.3 }}
+                    >
+                      <Link
+                        href={link.href}
+                        className={`block text-lg font-medium transition-colors duration-200 ${
+                          isActive(link.href) 
+                            ? "text-black" 
+                            : "text-gray-600 hover:text-black"
+                        }`}
+                        onClick={toggleMenu}
+                      >
+                        {link.name}
+                      </Link>
+                    </motion.div>
+                  ))}
                   <motion.div
-                    key={link.name}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 * index, duration: 0.3 }}
+                    transition={{ delay: 0.1 * navLinks.length, duration: 0.3 }}
+                    className="pt-4"
                   >
                     <Link
-                      href={link.href}
-                      className={`block rounded-md px-3 py-2 text-base font-medium transition-all duration-200 ${
-                        isActive(link.href) 
-                          ? "text-[#0066FF]" 
-                          : "text-[#F8FAFC]"
-                      }`}
-                      style={{
-                        backgroundColor: isActive(link.href) 
-                          ? "rgba(0, 102, 255, 0.1)" 
-                          : "transparent"
-                      }}
+                      href="/demo"
+                      className="btn-primary w-full justify-center"
                       onClick={toggleMenu}
                     >
-                      {link.name}
+                      Request Demo
                     </Link>
                   </motion.div>
-                ))}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 * navLinks.length, duration: 0.3 }}
-                  className="pt-4"
-                >
-                  <Link
-                    href="/waitlist"
-                    className="block rounded-md px-3 py-2 text-base font-medium transition-all duration-300"
-                    style={{
-                      background: "linear-gradient(to right, #0066FF, #00FF88)",
-                      color: "#0A0A0F",
-                      boxShadow: "0 4px 15px rgba(0, 102, 255, 0.25)"
-                    }}
-                    onClick={toggleMenu}
-                  >
-                    Join Waitlist
-                  </Link>
-                </motion.div>
+                </div>
               </div>
             </div>
           </motion.div>
