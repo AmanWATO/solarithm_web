@@ -39,7 +39,13 @@ export default function Footer() {
   return (
     <footer className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 pattern-dots opacity-10" />
+      <div 
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+          backgroundSize: '20px 20px'
+        }}
+      />
       <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent" />
 
       <div className="relative px-4 py-16 sm:px-6 lg:px-8">
@@ -54,10 +60,10 @@ export default function Footer() {
               className="lg:col-span-1"
             >
               <div className="flex items-center mb-6">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-solar-400 to-solar-600">
+                <div className="p-2 rounded-lg bg-gradient-to-br from-orange-400 to-orange-600">
                   <ModernSolarIcon size={28} className="text-white" />
                 </div>
-                <h3 className="ml-3 text-xl font-display font-bold gradient-text">
+                <h3 className="ml-3 text-xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
                   Solarithm
                 </h3>
               </div>
@@ -72,7 +78,7 @@ export default function Footer() {
                   <motion.a
                     key={social.label}
                     href={social.href}
-                    className="group relative p-3 rounded-lg glass hover:bg-solar-500/20 transition-all duration-300"
+                    className="group relative p-3 rounded-lg bg-slate-800/50 backdrop-blur-sm hover:bg-orange-500/20 transition-all duration-300 border border-slate-700/50"
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     initial={{ opacity: 0, y: 20 }}
@@ -81,7 +87,7 @@ export default function Footer() {
                     viewport={{ once: true }}
                     aria-label={social.label}
                   >
-                    <social.icon className="h-5 w-5 text-slate-300 group-hover:text-solar-300 transition-colors" />
+                    <social.icon className="h-5 w-5 text-slate-300 group-hover:text-orange-300 transition-colors" />
 
                     {/* Hover glow */}
                     <motion.div
@@ -101,7 +107,7 @@ export default function Footer() {
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              <h3 className="mb-6 text-lg font-display font-semibold text-solar-300">Navigation</h3>
+              <h3 className="mb-6 text-lg font-semibold text-orange-300">Navigation</h3>
               <ul className="space-y-3">
                 {navigationLinks.map((link, index) => (
                   <motion.li
@@ -117,7 +123,7 @@ export default function Footer() {
                     >
                       {link.name}
                       <motion.span
-                        className="absolute -bottom-1 left-0 h-0.5 bg-solar-400"
+                        className="absolute -bottom-1 left-0 h-0.5 bg-orange-400"
                         initial={{ width: 0 }}
                         whileHover={{ width: "100%" }}
                         transition={{ duration: 0.3 }}
@@ -135,7 +141,7 @@ export default function Footer() {
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <h3 className="mb-6 text-lg font-display font-semibold text-sky-300">Legal</h3>
+              <h3 className="mb-6 text-lg font-semibold text-sky-300">Legal</h3>
               <ul className="space-y-3">
                 {legalLinks.map((link, index) => (
                   <motion.li
@@ -169,7 +175,7 @@ export default function Footer() {
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <h3 className="mb-6 text-lg font-display font-semibold text-forest-300">Contact</h3>
+              <h3 className="mb-6 text-lg font-semibold text-green-300">Contact</h3>
               <ul className="space-y-4">
                 {contactInfo.map((contact, index) => (
                   <motion.li
@@ -183,7 +189,7 @@ export default function Footer() {
                       href={contact.href}
                       className="group flex items-start gap-3 text-slate-300 hover:text-white transition-colors duration-300"
                     >
-                      <contact.icon className="h-5 w-5 mt-0.5 flex-shrink-0 text-forest-400" />
+                      <contact.icon className="h-5 w-5 mt-0.5 flex-shrink-0 text-green-400" />
                       <span className="leading-relaxed">{contact.text}</span>
                     </Link>
                   </motion.li>
@@ -207,7 +213,7 @@ export default function Footer() {
 
               {/* Animated tagline */}
               <motion.p
-                className="text-sm font-medium gradient-text"
+                className="text-sm font-medium bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent"
                 animate={{
                   backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
                 }}
